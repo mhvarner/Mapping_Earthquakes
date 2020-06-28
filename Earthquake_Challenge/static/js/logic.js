@@ -87,8 +87,8 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
 			return 1;
 		}
 		return magnitude * 4;
-	} 
-		// Create a legend control object.
+	}
+	// Create a legend control object.
 	let legend = L.control({
 		position: "bottomright"
 	});
@@ -103,31 +103,31 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
 			"#ee9c00",
 			"#ea822c",
 			"#ea2c2c"
-		 ];
+		];
 		for (var i = 0; i < magnitudes.length; i++) {
-		div.innerHTML +=
-			"<i style='background: " + colors[i] + "'></i> " +
-			magnitudes[i] + (magnitudes[i + 1] ? "&ndash;" + magnitudes[i + 1] + "<br>" : "+");
+			div.innerHTML +=
+				"<i style='background: " + colors[i] + "'></i> " +
+				magnitudes[i] + (magnitudes[i + 1] ? "&ndash;" + magnitudes[i + 1] + "<br>" : "+");
 		}
 		return div;
-		}
-		console.log(legend)
-	    console.log(map)
-		
+	}
+	console.log(legend)
+	console.log(map)
+
 	// Creating a GeoJSON layer with the retrieved data.
-			L.geoJson(data, {
+	L.geoJson(data, {
 		// We turn each feature into a circleMarker on the map.
-				pointToLayer: function (feature, latlng) {
-		        return L.circleMarker(latlng);
-	},
-// We set the style for each circleMarker using our styleInfo function.
-	            style: styleInfo,
-	            onEachFeature: function (feature, layer) {
-			        layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
-    }
-}).addTo(earthquakes)
-    earthquakes.addTo(map);
-    legend.addTo(map)
+		pointToLayer: function (feature, latlng) {
+			return L.circleMarker(latlng);
+		},
+		// We set the style for each circleMarker using our styleInfo function.
+		style: styleInfo,
+		onEachFeature: function (feature, layer) {
+			layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
+		}
+	}).addTo(earthquakes)
+	earthquakes.addTo(map);
+	legend.addTo(map)
 });
 //Identifying Tectonic Plates URL
 let tectonicPlates = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
@@ -136,14 +136,13 @@ d3.json(tectonicPlates).then(function (data) {
 	// Creating a GeoJSON layer with the retrieved data.
 	L.geoJson(data, {
 		// We turn each feature into a circleMarker on the map.
-		pointToLayer: function (feature, latlng) {
-		return L.polyline(latlng);
-},
-		color: "#FFFF66",
-		opacity: 1,
-		stroke: true,
-		weight: 2,
-		dashArray: (20,20)
-	},
-    plates.addTo(map)
-)})
+		//pointToLayer: function (feature, latlng) {
+			//return L.polyline(latlng);
+		//},
+		color: "red",
+		weight: 2
+	}).addTo(plates);
+	plates.addTo(map);
+});
+
+
